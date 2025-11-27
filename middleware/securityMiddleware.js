@@ -11,18 +11,14 @@ export const authLimiter = rateLimit({
 // Create password schema
 const passwordSchema = new PasswordValidator();
 passwordSchema
-    .is().min(8)
-    .is().max(100)
-    .has().uppercase()
-    .has().lowercase()
-    .has().digits(1)
-    .has().not().spaces();
+    .is().min(6)
+    .is().max(100);
 
 export const validatePassword = (req, res, next) => {
     if (!passwordSchema.validate(req.body.password)) {
         return res.status(400).json({
             success: false,
-            message: 'Password must contain at least 8 characters, including uppercase, lowercase, and numbers'
+            message: 'Password must be at least 6 characters long'
         });
     }
     next();
